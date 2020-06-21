@@ -14,6 +14,7 @@ namespace BeechIt\NewsTtnewsimport\Service\Import;
  */
 use GeorgRinger\News\Domain\Service\AbstractImportService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use GeorgRinger\News\Domain\Repository\NewsRepository;
 
 /**
  * DAM Media Tag to FAL Link Conversion Service
@@ -31,9 +32,13 @@ class DamMediaTagConversionService extends AbstractImportService {
 
 	/**
 	 * @var \GeorgRinger\News\Domain\Repository\NewsRepository
-	 * @inject
 	 */
 	protected $newsRepository;
+
+	public function injectNewsRepository(NewsRepository $newsRepository)
+	{
+		$this->newsRepository = $newsRepository;
+	}
 
 	public function __construct() {
 		/** @var \TYPO3\CMS\Core\Log\Logger $logger */

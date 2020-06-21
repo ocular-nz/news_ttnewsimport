@@ -14,6 +14,8 @@ namespace BeechIt\NewsTtnewsimport\Service\Import;
  */
 use GeorgRinger\News\Jobs\AbstractImportJob;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use GeorgRinger\News\Domain\Repository\NewsRepository;
+
 
 /**
  * MblNewsevent Import Service
@@ -31,9 +33,14 @@ class MblNewseventImportService extends AbstractImportJob {
 
 	/**
 	 * @var \GeorgRinger\News\Domain\Repository\NewsRepository
-	 * @inject
 	 */
 	protected $newsRepository;
+
+	public function injectNewsRepository(NewsRepository $newsRepository)
+	{
+		$this->newsRepository = $newsRepository;
+	}
+
 
 	public function __construct() {
 		/** @var \TYPO3\CMS\Core\Log\Logger $logger */

@@ -44,6 +44,14 @@ class TTNewsCategoryImportService extends CategoryImportService {
 
 	}
 
+	static protected function deleteClause($table, $tableAlias = '') {
+		if ($GLOBALS['TCA'][$table]['ctrl']['delete']) {
+			return ' AND ' . ($tableAlias ? $tableAlias : $table) . '.' . $GLOBALS['TCA'][$table]['ctrl']['delete'] . '=0';
+		} else {
+			return '';
+		}
+	}		
+
 	/**
 	 * Migrate tt_news_categorymounts to category_pems in either be_groups or be_users
 	 *
@@ -55,7 +63,7 @@ class TTNewsCategoryImportService extends CategoryImportService {
 		$dataHandler->admin = TRUE;
 
 		/* assign imported categories to be_groups or be_users */
-		$whereClause = 'tt_news_categorymounts != \'\'' . BackendUtility::deleteClause($table);
+		$whereClause = 'tt_news_categorymounts != \'\'' . self::deleteClause($table);
 		$beGroupsOrUsersWithTtNewsCategorymounts = $this->databaseConnection->exec_SELECTgetRows('*', $table, $whereClause);
 
 		$data = array();
